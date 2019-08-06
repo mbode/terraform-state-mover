@@ -32,7 +32,7 @@ func main() {
 	prompt := promptui.Select{Label: "Select Source", Items: srcs, Templates: srcTempl}
 	i, _, err := prompt.Run()
 	if err != nil {
-		log.Fatalf("Prompt failed %v\n", err)
+		log.Panicf("Prompt failed %v\n", err)
 	}
 	src := srcs[i]
 
@@ -53,7 +53,7 @@ func main() {
 	prompt = promptui.Select{Label: "Select Destination", Items: dests, Templates: destTempl}
 	j, _, err := prompt.Run()
 	if err != nil {
-		log.Fatalf("Prompt failed %v\n", err)
+		log.Panicf("Prompt failed %v\n", err)
 	}
 	dest := dests[j]
 

@@ -13,13 +13,13 @@ import (
 func changes(dir string) []ResChange {
 	tfPlan, err := ioutil.TempFile(dir, "tfplan")
 	if err != nil {
-		log.Fatalf("ioutil.TempFile() failed with %s\n", err)
+		log.Panicf("ioutil.TempFile() failed with %s\n", err)
 	}
 	tfPlanName := tfPlan.Name()
 	defer os.Remove(tfPlanName)
 
 	if err := terraformExec(dir, "plan", "-out="+tfPlanName); err != nil {
-		log.Fatalf("terraform plan failed with %s\n", err)
+		log.Panicf("terraform plan failed with %s\n", err)
 	}
 
 	cmd := exec.Command("terraform", "show", "-json", tfPlanName)
@@ -28,13 +28,13 @@ func changes(dir string) []ResChange {
 	cmd.Stdout = &stdout
 	cmd.Stderr = os.Stderr
 	if err = cmd.Run(); err != nil {
-		log.Fatalf("cmd.Run() failed with %s\n", err)
+		log.Panicf("cmd.Run() failed with %s\n", err)
 	}
 
 	changes := resChanges{}
 
 	if err := json.Unmarshal(stdout.Bytes(), &changes); err != nil {
-		log.Fatalf("json.Unmarshal() failed with %s\n", err)
+		log.Panicf("json.Unmarshal() failed with %s\n", err)
 	}
 	return changes.ResChanges
 }
