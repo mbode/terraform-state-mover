@@ -11,12 +11,12 @@ func TestMove(t *testing.T) {
 	dir := createDir(t)
 	defer os.RemoveAll(dir)
 
-	oldTf := `Resource "null_resource" "old" {}
-Resource "null_resource" "second" {}`
+	oldTf := `resource "null_resource" "old" {}
+resource "null_resource" "second" {}`
 	prepareState(dir, oldTf, t)
 
-	newTf := `Resource "null_resource" "new" {}
-Resource "null_resource" "second" {}`
+	newTf := `resource "null_resource" "new" {}
+resource "null_resource" "second" {}`
 	if err := ioutil.WriteFile(dir+"/main.tf", []byte(newTf), 0644); err != nil {
 		t.Fatal(err)
 	}

@@ -11,8 +11,8 @@ func TestCreate(t *testing.T) {
 	dir := createDir(t)
 	defer os.RemoveAll(dir)
 
-	content := `Resource "null_resource" "first" {}
-	Resource "null_resource" "second" {}`
+	content := `resource "null_resource" "first" {}
+resource "null_resource" "second" {}`
 	if err := ioutil.WriteFile(dir+"/main.tf", []byte(content), 0644); err != nil {
 		t.Fatal(err)
 	}
@@ -34,8 +34,8 @@ func TestDelete(t *testing.T) {
 	dir := createDir(t)
 	defer os.RemoveAll(dir)
 
-	content := `Resource "null_resource" "first" {}
-Resource "null_resource" "second" {}`
+	content := `resource "null_resource" "first" {}
+resource "null_resource" "second" {}`
 	prepareState(dir, content, t)
 
 	if err := ioutil.WriteFile(dir+"/main.tf", []byte("\n"), 0644); err != nil {
@@ -55,8 +55,8 @@ func TestNoOp(t *testing.T) {
 	dir := createDir(t)
 	defer os.RemoveAll(dir)
 
-	content := `Resource "null_resource" "first" {}
-Resource "null_resource" "second" {}`
+	content := `resource "null_resource" "first" {}
+resource "null_resource" "second" {}`
 	prepareState(dir, content, t)
 
 	if err := ioutil.WriteFile(dir+"/main.tf", []byte(content), 0644); err != nil {
