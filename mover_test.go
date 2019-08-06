@@ -27,7 +27,7 @@ resource "null_resource" "second" {}`
 		{"null_resource.new", "null_resource", Change{[]changeAction{noOp}}},
 		{"null_resource.second", "null_resource", Change{[]changeAction{noOp}}},
 	}
-	if got := changes(dir); !reflect.DeepEqual(got, want) {
+	if got := changes(dir, []string{}); !reflect.DeepEqual(got, want) {
 		t.Errorf("changes() = %q, want %q", got, want)
 	}
 }

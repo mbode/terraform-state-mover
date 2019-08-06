@@ -10,7 +10,7 @@ import (
 	"reflect"
 )
 
-func changes(dir string) []ResChange {
+func changes(dir string, args []string) []ResChange {
 	tfPlan, err := ioutil.TempFile(dir, "tfplan")
 	if err != nil {
 		log.Panicf("ioutil.TempFile() failed with %s\n", err)
@@ -18,7 +18,7 @@ func changes(dir string) []ResChange {
 	tfPlanName := tfPlan.Name()
 	defer os.Remove(tfPlanName)
 
-	if err := terraformExec(dir, "plan", "-out="+tfPlanName); err != nil {
+	if err := terraformExec(dir, args, "plan", "-out="+tfPlanName); err != nil {
 		log.Panicf("terraform plan failed with %s\n", err)
 	}
 

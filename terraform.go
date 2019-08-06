@@ -34,9 +34,13 @@ type Resource struct {
 	Type    string
 }
 
-func terraformExec(dir string, args ...string) error {
+func terraformExec(dir string, args []string, extraArgs ...string) error {
+	args = append(extraArgs, args...)
 	cmd := exec.Command("terraform", args...)
 	cmd.Dir = dir
 	cmd.Stderr = os.Stderr
+	cmd.Env = append(os.Environ(),
+		"TF_INPUT=false",
+	)
 	return cmd.Run()
 }
