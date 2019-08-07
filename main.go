@@ -1,3 +1,4 @@
+// Terraform-state-mover helps refactoring terraform code by offering an interactive prompt for the `terraform state mv` command.
 package main
 
 import (

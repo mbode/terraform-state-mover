@@ -9,12 +9,14 @@ type resChanges struct {
 	ResChanges []ResChange `json:"resource_changes"`
 }
 
+// ResChange represents a resource change in a Terraform plan.
 type ResChange struct {
 	Address string
 	Type    string
 	Change  Change
 }
 
+// Change represents a list of actions to one resource in a Terraform plan.
 type Change struct {
 	Actions []changeAction
 }
@@ -29,6 +31,7 @@ const (
 	del    changeAction = "delete"
 )
 
+// Resource represents a Terraform resource and consists of a type and an address.
 type Resource struct {
 	Address string
 	Type    string
