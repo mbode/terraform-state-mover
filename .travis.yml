@@ -1,1 +1,4 @@
 language: go
+before_install:
+  - wget https://releases.hashicorp.com/terraform/0.12.6/terraform_0.12.6_linux_amd64.zip -O /tmp/terraform.zip
+  - sudo unzip -d /usr/local/bin/ /tmp/terraform.zip
