@@ -1,4 +1,12 @@
 language: go
+env:
+  - TF_VERSION=0.12.0
+  - TF_VERSION=0.12.1
+  - TF_VERSION=0.12.2
+  - TF_VERSION=0.12.3
+  - TF_VERSION=0.12.4
+  - TF_VERSION=0.12.5
+  - TF_VERSION=0.12.6
 before_install:
-  - wget https://releases.hashicorp.com/terraform/0.12.6/terraform_0.12.6_linux_amd64.zip -O /tmp/terraform.zip
+  - wget https://releases.hashicorp.com/terraform/${TF_VERSION}/terraform_${TF_VERSION}_linux_amd64.zip -O /tmp/terraform.zip
   - sudo unzip -d /usr/local/bin/ /tmp/terraform.zip
