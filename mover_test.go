@@ -21,13 +21,21 @@ resource "null_resource" "second" {}`
 		t.Fatal(err)
 	}
 
-	move(dir, Resource{"null_resource.old", "null_resource"}, Resource{"null_resource.new", "null_resource"})
+	move(Resource{"null_resource.old", "null_resource"}, Resource{"null_resource.new", "null_resource"})
 
-	want := []ResChange{
-		{"null_resource.new", "null_resource", Change{[]changeAction{noOp}}},
-		{"null_resource.second", "null_resource", Change{[]changeAction{noOp}}},
+	var want []ResChange
+	isPre012, err := isPre012()
+	if err != nil {
+		t.Fatal(err)
 	}
-	if got := changes(dir, []string{}); !reflect.DeepEqual(got, want) {
+	if !isPre012 {
+		want = []ResChange{
+			{"null_resource.new", "null_resource", Change{[]changeAction{noOp}}},
+			{"null_resource.second", "null_resource", Change{[]changeAction{noOp}}},
+		}
+	}
+
+	if got := changes([]string{}); !reflect.DeepEqual(got, want) {
 		t.Errorf("changes() = %q, want %q", got, want)
 	}
 }

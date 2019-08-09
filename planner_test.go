@@ -17,7 +17,7 @@ resource "null_resource" "second" {}`
 		t.Fatal(err)
 	}
 
-	if err := terraformExec(dir, []string{}, "init"); err != nil {
+	if err := terraformExec([]string{}, "init"); err != nil {
 		t.Fatalf("terraform init failed with %s\n", err)
 	}
 
@@ -25,7 +25,7 @@ resource "null_resource" "second" {}`
 		{"null_resource.first", "null_resource", Change{[]changeAction{create}}},
 		{"null_resource.second", "null_resource", Change{[]changeAction{create}}},
 	}
-	if got := changes(dir, []string{}); !reflect.DeepEqual(got, want) {
+	if got := changes([]string{}); !reflect.DeepEqual(got, want) {
 		t.Errorf("changes() = %q, want %q", got, want)
 	}
 }
@@ -46,7 +46,7 @@ resource "null_resource" "second" {}`
 		{"null_resource.first", "null_resource", Change{[]changeAction{del}}},
 		{"null_resource.second", "null_resource", Change{[]changeAction{del}}},
 	}
-	if got := changes(dir, []string{}); !reflect.DeepEqual(got, want) {
+	if got := changes([]string{}); !reflect.DeepEqual(got, want) {
 		t.Errorf("changes() = %q, want %q", got, want)
 	}
 }
@@ -63,11 +63,19 @@ resource "null_resource" "second" {}`
 		t.Fatal(err)
 	}
 
-	want := []ResChange{
-		{"null_resource.first", "null_resource", Change{[]changeAction{noOp}}},
-		{"null_resource.second", "null_resource", Change{[]changeAction{noOp}}},
+	var want []ResChange
+	isPre012, err := isPre012()
+	if err != nil {
+		t.Fatal(err)
 	}
-	if got := changes(dir, []string{}); !reflect.DeepEqual(got, want) {
+	if !isPre012 {
+		want = []ResChange{
+			{"null_resource.first", "null_resource", Change{[]changeAction{noOp}}},
+			{"null_resource.second", "null_resource", Change{[]changeAction{noOp}}},
+		}
+	}
+
+	if got := changes([]string{}); !reflect.DeepEqual(got, want) {
 		t.Errorf("changes() = %q, want %q", got, want)
 	}
 }
@@ -96,6 +104,10 @@ func createDir(t *testing.T) string {
 	if err != nil {
 		t.Fatal(err)
 	}
+	err = os.Chdir(dir)
+	if err != nil {
+		t.Fatal(err)
+	}
 	return dir
 }
 
@@ -103,10 +115,10 @@ func prepareState(dir string, content string, t *testing.T) {
 	if err := ioutil.WriteFile(dir+"/main.tf", []byte(content), 0644); err != nil {
 		t.Fatal(err)
 	}
-	if err := terraformExec(dir, []string{}, "init"); err != nil {
+	if err := terraformExec([]string{}, "init"); err != nil {
 		t.Fatal(err)
 	}
-	if err := terraformExec(dir, []string{}, "apply", "-auto-approve"); err != nil {
+	if err := terraformExec([]string{}, "apply", "-auto-approve"); err != nil {
 		t.Fatal(err)
 	}
 }

@@ -12,12 +12,7 @@ import (
 func main() {
 	args := os.Args[1:]
 
-	dir, err := os.Getwd()
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	changes := changes(dir, args)
+	changes := changes(args)
 	srcs := filter(changes, del)
 
 	if len(srcs) == 0 {
@@ -60,5 +55,5 @@ func main() {
 	}
 	dest := dests[j]
 
-	move(dir, src, dest)
+	move(src, dest)
 }

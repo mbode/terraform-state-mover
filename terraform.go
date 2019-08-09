@@ -1,8 +1,11 @@
 package main
 
 import (
+	"bytes"
+	"github.com/hashicorp/go-version"
 	"os"
 	"os/exec"
+	"regexp"
 )
 
 type resChanges struct {
@@ -37,13 +40,31 @@ type Resource struct {
 	Type    string
 }
 
-func terraformExec(dir string, args []string, extraArgs ...string) error {
+func terraformExec(args []string, extraArgs ...string) error {
 	args = append(extraArgs, args...)
 	cmd := exec.Command("terraform", args...)
-	cmd.Dir = dir
 	cmd.Stderr = os.Stderr
 	cmd.Env = append(os.Environ(),
 		"TF_INPUT=false",
 	)
 	return cmd.Run()
+}
+
+func isPre012() (bool, error) {
+	cmd := exec.Command("terraform", "version")
+	cmdOutput := &bytes.Buffer{}
+	cmd.Stdout = cmdOutput
+	err := cmd.Run()
+	if err != nil {
+		return false, err
+	}
+	output := cmdOutput.Bytes()
+	var ver = regexp.MustCompile(`Terraform v(\d+\.\d+\.\d+)`)
+	result := ver.FindStringSubmatch(string(output))
+	v012, err := version.NewVersion("0.12")
+	if err != nil {
+		return false, err
+	}
+	current, err := version.NewVersion(result[1])
+	return current.LessThan(v012), nil
 }
