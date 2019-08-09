@@ -21,7 +21,9 @@ resource "null_resource" "second" {}`
 		t.Fatal(err)
 	}
 
-	move(Resource{"null_resource.old", "null_resource"}, Resource{"null_resource.new", "null_resource"})
+	if err := move(Resource{"null_resource.old", "null_resource"}, Resource{"null_resource.new", "null_resource"}); err != nil {
+		t.Fatal(err)
+	}
 
 	var want []ResChange
 	isPre012, err := isPre012()
@@ -35,7 +37,7 @@ resource "null_resource" "second" {}`
 		}
 	}
 
-	if got := changes([]string{}); !reflect.DeepEqual(got, want) {
+	if got, err := changes([]string{}); err != nil && !reflect.DeepEqual(got, want) {
 		t.Errorf("changes() = %q, want %q", got, want)
 	}
 }

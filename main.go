@@ -12,7 +12,10 @@ import (
 func main() {
 	args := os.Args[1:]
 
-	changes := changes(args)
+	changes, err := changes(args)
+	if err != nil {
+		log.Panicf("Detecting changes failed %v\n", err)
+	}
 	srcs := filter(changes, del)
 
 	if len(srcs) == 0 {
@@ -55,5 +58,7 @@ func main() {
 	}
 	dest := dests[j]
 
-	move(src, dest)
+	if err := move(src, dest); err != nil {
+		log.Panicf("Moving resource failed %v\n", err)
+	}
 }
