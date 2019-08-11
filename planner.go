@@ -48,30 +48,29 @@ func changes(args []string) ([]ResChange, error) {
 			changes = append(changes, ResChange{address, parts[len(parts)-2], Change{[]changeAction{del}}})
 		}
 		return changes, nil
-	} else {
-		cmd := exec.Command("terraform", "show", "-json", tfPlanName)
-		var stdout bytes.Buffer
-		cmd.Stdout = &stdout
-		cmd.Stderr = os.Stderr
-		if err = cmd.Run(); err != nil {
-			return nil, err
-		}
-
-		changes := resChanges{}
-
-		if err := json.Unmarshal(stdout.Bytes(), &changes); err != nil {
-			return nil, err
-		}
-		return changes.ResChanges, nil
 	}
+	cmd := exec.Command("terraform", "show", "-json", tfPlanName)
+	var stdout bytes.Buffer
+	cmd.Stdout = &stdout
+	cmd.Stderr = os.Stderr
+	if err = cmd.Run(); err != nil {
+		return nil, err
+	}
+
+	changes := resChanges{}
+
+	if err := json.Unmarshal(stdout.Bytes(), &changes); err != nil {
+		return nil, err
+	}
+	return changes.ResChanges, nil
 }
 
-func filter(resources []ResChange, action changeAction) []Resource {
-	var list []Resource
+func filter(resources []ResChange, action changeAction) map[Resource]bool {
+	set := make(map[Resource]bool)
 	for _, res := range resources {
 		if reflect.DeepEqual(res.Change.Actions, []changeAction{action}) {
-			list = append(list, Resource{res.Address, res.Type})
+			set[Resource{res.Address, res.Type}] = true
 		}
 	}
-	return list
+	return set
 }

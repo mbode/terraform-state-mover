@@ -2,11 +2,9 @@
 package main
 
 import (
-	"fmt"
-	"github.com/manifoldco/promptui"
 	"log"
 	"os"
-	"strings"
+	"reflect"
 )
 
 func main() {
@@ -17,48 +15,25 @@ func main() {
 		log.Panicf("Detecting changes failed %v\n", err)
 	}
 	srcs := filter(changes, del)
+	dests := filter(changes, create)
 
-	if len(srcs) == 0 {
-		fmt.Println("Found no resources to move.")
-		return
-	}
-	allDests := filter(changes, create)
-
-	srcTempl := &promptui.SelectTemplates{
-		Label:    "{{ . }}",
-		Active:   "\U0000261E {{ .Address | cyan | underline }} ({{ .Type | red }})",
-		Inactive: "  {{ .Address | cyan }} ({{ .Type | red }})",
-		Selected: "{{ .Address }} \U00002192",
-	}
-	prompt := promptui.Select{Label: "Select Source", Items: srcs, Templates: srcTempl}
-	i, _, err := prompt.Run()
-	if err != nil {
-		log.Panicf("Prompt failed %v\n", err)
-	}
-	src := srcs[i]
-
-	var dests []Resource
-	for _, r := range allDests {
-		if r.Type == src.Type {
-			dests = append(dests, r)
+	moves := make(map[Resource]Resource)
+	for len(srcs) > 0 && len(dests) > 0 {
+		src, dest, err := prompt(srcs, dests)
+		if err != nil {
+			log.Panicf("Prompting failed %v\n", err)
 		}
+		if reflect.DeepEqual(src, Resource{}) {
+			break
+		}
+		moves[src] = dest
+		delete(srcs, src)
+		delete(dests, dest)
 	}
 
-	spaces := strings.Repeat(" ", len(src.Address)+3)
-	destTempl := &promptui.SelectTemplates{
-		Label:    spaces + "{{ . }}",
-		Active:   spaces + "\U0000261E {{ .Address | cyan | underline }} ({{ .Type | red }})",
-		Inactive: spaces + "  {{ .Address | cyan }} ({{ .Type | red }})",
-		Selected: spaces + "{{ .Address }}",
-	}
-	prompt = promptui.Select{Label: "Select Destination", Items: dests, Templates: destTempl}
-	j, _, err := prompt.Run()
-	if err != nil {
-		log.Panicf("Prompt failed %v\n", err)
-	}
-	dest := dests[j]
-
-	if err := move(src, dest); err != nil {
-		log.Panicf("Moving resource failed %v\n", err)
+	for src, dest := range moves {
+		if err := move(src, dest); err != nil {
+			log.Panicf("Moving resource failed %v\n", err)
+		}
 	}
 }

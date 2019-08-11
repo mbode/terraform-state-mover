@@ -88,14 +88,17 @@ func TestFilter(t *testing.T) {
 		{"null_resource.update", "null_resource", Change{[]changeAction{update}}},
 	}
 
-	want := []Resource{{"null_resource.create", "null_resource"}}
+	want := make(map[Resource]bool)
+	want[Resource{"null_resource.create", "null_resource"}] = true
+
 	if got := filter(resources, create); !reflect.DeepEqual(got, want) {
-		t.Errorf("changes() = %q, want %q", got, want)
+		t.Errorf("changes() = %v, want %v", got, want)
 	}
 
-	want = []Resource{{"null_resource.delete", "null_resource"}}
+	want = make(map[Resource]bool)
+	want[Resource{"null_resource.delete", "null_resource"}] = true
 	if got := filter(resources, del); !reflect.DeepEqual(got, want) {
-		t.Errorf("changes() = %q, want %q", got, want)
+		t.Errorf("changes() = %v, want %v", got, want)
 	}
 }
 
