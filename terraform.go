@@ -66,5 +66,8 @@ func isPre012() (bool, error) {
 		return false, err
 	}
 	current, err := version.NewVersion(result[1])
+	if err != nil {
+		return false, err
+	}
 	return current.LessThan(v012), nil
 }

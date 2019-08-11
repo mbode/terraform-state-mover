@@ -1,6 +1,6 @@
 [![Go Report Card](https://goreportcard.com/badge/github.com/mbode/terraform-state-mover)](https://goreportcard.com/report/github.com/mbode/terraform-state-mover)
-[![Travis](https://img.shields.io/travis/mbode/terraform-state-mover?style=flat-square)](https://travis-ci.org/mbode/terraform-state-mover)
-[![License](https://img.shields.io/github/license/mbode/terraform-state-mover?style=flat-square)](https://github.com/mbode/terraform-state-mover/blob/master/LICENSE)
+[![Travis](https://img.shields.io/travis/mbode/terraform-state-mover)](https://travis-ci.org/mbode/terraform-state-mover)
+[![License](https://img.shields.io/github/license/mbode/terraform-state-mover)](https://github.com/mbode/terraform-state-mover/blob/master/LICENSE)
 
 # Terraform State Mover
 
