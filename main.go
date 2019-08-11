@@ -2,17 +2,39 @@
 package main
 
 import (
+	"gopkg.in/urfave/cli.v2"
 	"log"
 	"os"
 	"reflect"
 )
 
+var (
+	version = "dev"
+)
+
 func main() {
-	args := os.Args[1:]
+	app := &cli.App{
+		Name:      "terraform-state-mover",
+		Usage:     "refactoring Terraform code has never been easier",
+		Authors:   []*cli.Author{{Name: "Maximilian Bode", Email: "maxbode@gmail.com"}},
+		Action:    action,
+		UsageText: "terraform-state-mover [-- <terraform args>]",
+		Version:   version,
+	}
+	if err := app.Run(os.Args); err != nil {
+		log.Fatal(err)
+	}
+}
+
+func action(c *cli.Context) error {
+	var args []string
+	if len(os.Args) >= 2 && os.Args[1] == "--" {
+		args = os.Args[2:]
+	}
 
 	changes, err := changes(args)
 	if err != nil {
-		log.Panicf("Detecting changes failed %v\n", err)
+		return err
 	}
 	srcs := filter(changes, del)
 	dests := filter(changes, create)
@@ -21,7 +43,7 @@ func main() {
 	for len(srcs) > 0 && len(dests) > 0 {
 		src, dest, err := prompt(srcs, dests)
 		if err != nil {
-			log.Panicf("Prompting failed %v\n", err)
+			return err
 		}
 		if reflect.DeepEqual(src, Resource{}) {
 			break
@@ -33,7 +55,8 @@ func main() {
 
 	for src, dest := range moves {
 		if err := move(src, dest); err != nil {
-			log.Panicf("Moving resource failed %v\n", err)
+			return err
 		}
 	}
+	return nil
 }

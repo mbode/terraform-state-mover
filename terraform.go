@@ -2,7 +2,7 @@ package main
 
 import (
 	"bytes"
-	"github.com/hashicorp/go-version"
+	go_version "github.com/hashicorp/go-version"
 	"os"
 	"os/exec"
 	"regexp"
@@ -61,11 +61,11 @@ func isPre012() (bool, error) {
 	output := cmdOutput.Bytes()
 	var ver = regexp.MustCompile(`Terraform v(\d+\.\d+\.\d+)`)
 	result := ver.FindStringSubmatch(string(output))
-	v012, err := version.NewVersion("0.12")
+	v012, err := go_version.NewVersion("0.12")
 	if err != nil {
 		return false, err
 	}
-	current, err := version.NewVersion(result[1])
+	current, err := go_version.NewVersion(result[1])
 	if err != nil {
 		return false, err
 	}

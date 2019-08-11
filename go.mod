@@ -7,4 +7,5 @@ require (
 	github.com/hashicorp/go-version v1.2.0
 	github.com/manifoldco/promptui v0.3.2
 	gopkg.in/alecthomas/kingpin.v3-unstable v3.0.0-20180810215634-df19058c872c // indirect
+	gopkg.in/urfave/cli.v2 v2.0.0-20190806201727-b62605953717
 )

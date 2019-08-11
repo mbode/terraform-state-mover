@@ -18,10 +18,10 @@ go get github.com/mbode/terraform-state-mover
 terraform-state-mover # inside a Terraform root directory
 ```
 
-Extra arguments are passed to the `terraform plan` call. This makes the following possible:
+Extra arguments after a `--` are passed to the `terraform plan` call. This makes the following possible:
 ```bash
-terraform-state-mover -var key=value  # setting variables
-terraform-state-mover -var-file=variables.tfvars  # using variable files
+terraform-state-mover -- -var key=value  # setting variables
+terraform-state-mover -- -var-file=variables.tfvars  # using variable files
 ```
 
 ## Demo
