@@ -5,6 +5,43 @@ jobs:
   build:
     name: Build
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        terraform:
+          - 0.10.1
+          - 0.10.2
+          - 0.10.3
+          - 0.10.4
+          - 0.10.5
+          - 0.10.6
+          - 0.10.7
+          - 0.10.8
+          - 0.11.0
+          - 0.11.1
+          - 0.11.2
+          - 0.11.3
+          - 0.11.4
+          - 0.11.5
+          - 0.11.6
+          - 0.11.7
+          - 0.11.8
+          - 0.11.9
+          - 0.11.10
+          - 0.11.11
+          - 0.11.12
+          - 0.11.13
+          - 0.11.14
+          - 0.12.0
+          - 0.12.1
+          - 0.12.2
+          - 0.12.3
+          - 0.12.4
+          - 0.12.5
+          - 0.12.6
+          - 0.12.7
+          - 0.12.8
+          - 0.12.9
+
     steps:
 
       - name: Set up Go 1.12
@@ -12,6 +49,9 @@ jobs:
         with:
           go-version: 1.12
         id: go
+
+      - name: Install terraform
+        run: wget https://releases.hashicorp.com/terraform/${{ matrix.terraform }}/terraform_${{ matrix.terraform }}_linux_amd64.zip -O /tmp/terraform.zip && sudo unzip -o -d /usr/local/bin/ /tmp/terraform.zip
 
       - name: Check out code into the Go module directory
         uses: actions/checkout@v1
