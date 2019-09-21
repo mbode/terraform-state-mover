@@ -25,7 +25,11 @@ resource "null_resource" "second" {}`
 		{"null_resource.first", "null_resource", Change{[]changeAction{create}}},
 		{"null_resource.second", "null_resource", Change{[]changeAction{create}}},
 	}
-	if got, err := changes([]string{}); err != nil && !reflect.DeepEqual(got, want) {
+	got, err := changes([]string{})
+	if err != nil {
+		t.Fatalf("failed computing changes")
+	}
+	if !reflect.DeepEqual(got, want) {
 		t.Errorf("changes() = %q, want %q", got, want)
 	}
 }
@@ -46,7 +50,11 @@ resource "null_resource" "second" {}`
 		{"null_resource.first", "null_resource", Change{[]changeAction{del}}},
 		{"null_resource.second", "null_resource", Change{[]changeAction{del}}},
 	}
-	if got, err := changes([]string{}); err != nil && !reflect.DeepEqual(got, want) {
+	got, err := changes([]string{})
+	if err != nil {
+		t.Fatalf("failed computing changes")
+	}
+	if !reflect.DeepEqual(got, want) {
 		t.Errorf("changes() = %q, want %q", got, want)
 	}
 }
@@ -75,7 +83,11 @@ resource "null_resource" "second" {}`
 		}
 	}
 
-	if got, err := changes([]string{}); err != nil && !reflect.DeepEqual(got, want) {
+	got, err := changes([]string{})
+	if err != nil {
+		t.Fatalf("failed computing changes")
+	}
+	if !reflect.DeepEqual(got, want) {
 		t.Errorf("changes() = %q, want %q", got, want)
 	}
 }
