@@ -65,10 +65,25 @@ func changes(args []string) ([]ResChange, error) {
 	return changes.ResChanges, nil
 }
 
-func filter(resources []ResChange, action changeAction) map[Resource]bool {
+func filterByAction(resources []ResChange, action changeAction) map[Resource]bool {
 	set := make(map[Resource]bool)
 	for _, res := range resources {
 		if reflect.DeepEqual(res.Change.Actions, []changeAction{action}) {
+			set[Resource{res.Address, res.Type}] = true
+		}
+	}
+	return set
+}
+
+func filterByDestinationResourceTypes(sourceResources map[Resource]bool, destResources map[Resource]bool) map[Resource]bool {
+	set := make(map[Resource]bool)
+	types := make(map[string]bool)
+	for res := range destResources {
+		types[res.Type] = true
+	}
+
+	for res := range sourceResources {
+		if types[res.Type] {
 			set[Resource{res.Address, res.Type}] = true
 		}
 	}

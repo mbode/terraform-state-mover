@@ -103,13 +103,13 @@ func TestFilter(t *testing.T) {
 	want := make(map[Resource]bool)
 	want[Resource{"null_resource.create", "null_resource"}] = true
 
-	if got := filter(resources, create); !reflect.DeepEqual(got, want) {
+	if got := filterByAction(resources, create); !reflect.DeepEqual(got, want) {
 		t.Errorf("changes() = %v, want %v", got, want)
 	}
 
 	want = make(map[Resource]bool)
 	want[Resource{"null_resource.delete", "null_resource"}] = true
-	if got := filter(resources, del); !reflect.DeepEqual(got, want) {
+	if got := filterByAction(resources, del); !reflect.DeepEqual(got, want) {
 		t.Errorf("changes() = %v, want %v", got, want)
 	}
 }
@@ -135,5 +135,26 @@ func prepareState(dir string, content string, t *testing.T) {
 	}
 	if err := terraformExec([]string{}, "apply", "-auto-approve"); err != nil {
 		t.Fatal(err)
+	}
+}
+
+func TestFilterByDestinationResourceTypes(t *testing.T) {
+	resSrc1 := Resource{Address: "null_resource.resource_alpha", Type: "null_resource"}
+	resSrc2 := Resource{Address: "null_resource.resource_beta", Type: "another_type"}
+	resDest1 := Resource{Address: "null_resource.resource_gamma", Type: "null_resource"}
+	resDest2 := Resource{Address: "null_resource.resource_delta", Type: "new_type"}
+
+	sourceResources := make(map[Resource]bool)
+	sourceResources[resSrc1] = true
+	sourceResources[resSrc2] = true
+	destResources := make(map[Resource]bool)
+	destResources[resDest1] = true
+	destResources[resDest2] = true
+
+	want := make(map[Resource]bool)
+	want[resSrc1] = true
+
+	if got := filterByDestinationResourceTypes(sourceResources, destResources); !reflect.DeepEqual(got, want) {
+		t.Errorf("filterByDestinationResourceTypes() = %v, want %v", got, want)
 	}
 }

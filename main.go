@@ -36,8 +36,8 @@ func action(c *cli.Context) error {
 	if err != nil {
 		return err
 	}
-	srcs := filter(changes, del)
-	dests := filter(changes, create)
+	dests := filterByAction(changes, create)
+	srcs := filterByDestinationResourceTypes(filterByAction(changes, del), dests)
 
 	moves := make(map[Resource]Resource)
 	for len(srcs) > 0 && len(dests) > 0 {
