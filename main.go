@@ -15,10 +15,19 @@ var (
 )
 
 type config struct {
-	delay time.Duration
+	delay   time.Duration
+	verbose bool
+	dryrun  bool
 }
 
 func main() {
+
+	// do not use "-v" to print the version
+	cli.VersionFlag = &cli.BoolFlag{
+		Name: "version", Aliases: []string{},
+		Usage: "print the version only",
+	}
+
 	app := &cli.App{
 		Name:    "terraform-state-mover",
 		Usage:   "refactoring Terraform code has never been easier",
@@ -30,8 +39,19 @@ func main() {
 				Usage: "Delay between terraform state mv calls. Helps to avoid rate-limits.",
 				Value: time.Second * 2,
 			},
+			&cli.BoolFlag{
+				Name: "verbose", Aliases: []string{"v"},
+				Usage: "Be more verbose - prints e.g. terraform mv calls",
+				Value: false,
+			},
+			&cli.BoolFlag{
+				Name: "dry-run", Aliases: []string{"n"},
+				Usage: "Do not actually move state, enables -v",
+				Value: false,
+			},
 		},
-		Version: version,
+		UsageText: "terraform-state-mover [-v] [-d delay] [-n] [-- <terraform args>]",
+		Version:   version,
 	}
 	if err := app.Run(os.Args); err != nil {
 		log.Fatal(err)
@@ -69,8 +89,15 @@ func action(ctx *cli.Context) error {
 	if len(moves) == 0 {
 		fmt.Println("Nothing to do.")
 	}
+
+	var firstEntry = true
 	for src, dest := range moves {
-		if err := move(src, dest); err != nil {
+		if firstEntry {
+			firstEntry = false
+		} else {
+			wait(cfg)
+		}
+		if err := move(cfg, src, dest); err != nil {
 			return err
 		}
 	}
@@ -79,10 +106,15 @@ func action(ctx *cli.Context) error {
 
 func readConfig(ctx *cli.Context) config {
 	return config{
-		delay: ctx.Duration("delay"),
+		delay:   ctx.Duration("delay"),
+		verbose: ctx.Bool("verbose") || ctx.Bool("dry-run"),
+		dryrun:  ctx.Bool("dry-run"),
 	}
 }
 
 func wait(cfg config) {
+	if cfg.verbose {
+		fmt.Println("Waiting", cfg.delay, "...")
+	}
 	time.Sleep(cfg.delay)
 }

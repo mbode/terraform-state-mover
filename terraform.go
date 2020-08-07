@@ -2,10 +2,12 @@ package main
 
 import (
 	"bytes"
+	"fmt"
 	go_version "github.com/hashicorp/go-version"
 	"os"
 	"os/exec"
 	"regexp"
+	"strings"
 )
 
 type resChanges struct {
@@ -40,8 +42,15 @@ type Resource struct {
 	Type    string
 }
 
-func terraformExec(args []string, extraArgs ...string) error {
+func terraformExec(cfg config, executeInDryRun bool, args []string, extraArgs ...string) error {
 	args = append(extraArgs, args...)
+	if cfg.dryrun && !executeInDryRun {
+		fmt.Println("Dry-run - would have called now terraform", strings.Join(args, " "))
+		return nil
+	}
+	if cfg.verbose {
+		fmt.Println("Calling terraform", strings.Join(args, " "))
+	}
 	cmd := exec.Command("terraform", args...)
 	cmd.Stderr = os.Stderr
 	cmd.Env = append(os.Environ(),

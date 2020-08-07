@@ -1,5 +1,5 @@
 package main
 
-func move(from Resource, to Resource) error {
-	return terraformExec([]string{}, "state", "mv", from.Address, to.Address)
+func move(cfg config, from Resource, to Resource) error {
+	return terraformExec(cfg, false, []string{}, "state", "mv", from.Address, to.Address)
 }
