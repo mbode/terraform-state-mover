@@ -17,7 +17,7 @@ resource "null_resource" "second" {}`
 		t.Fatal(err)
 	}
 
-	if err := terraformExec([]string{}, "init"); err != nil {
+	if err := terraformExec(config{}, true, []string{}, "init"); err != nil {
 		t.Fatalf("terraform init failed with %s\n", err)
 	}
 
@@ -130,10 +130,10 @@ func prepareState(dir string, content string, t *testing.T) {
 	if err := ioutil.WriteFile(dir+"/main.tf", []byte(content), 0644); err != nil {
 		t.Fatal(err)
 	}
-	if err := terraformExec([]string{}, "init"); err != nil {
+	if err := terraformExec(config{}, true, []string{}, "init"); err != nil {
 		t.Fatal(err)
 	}
-	if err := terraformExec([]string{}, "apply", "-auto-approve"); err != nil {
+	if err := terraformExec(config{}, true, []string{}, "apply", "-auto-approve"); err != nil {
 		t.Fatal(err)
 	}
 }

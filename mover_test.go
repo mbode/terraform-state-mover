@@ -21,7 +21,7 @@ resource "null_resource" "second" {}`
 		t.Fatal(err)
 	}
 
-	if err := move(Resource{"null_resource.old", "null_resource"}, Resource{"null_resource.new", "null_resource"}); err != nil {
+	if err := move(config{}, Resource{"null_resource.old", "null_resource"}, Resource{"null_resource.new", "null_resource"}); err != nil {
 		t.Fatal(err)
 	}
 

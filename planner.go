@@ -19,7 +19,7 @@ func changes(args []string) ([]ResChange, error) {
 	tfPlanName := tfPlan.Name()
 	defer os.Remove(tfPlanName)
 
-	if err := terraformExec(args, "plan", "-out="+tfPlanName); err != nil {
+	if err := terraformExec(config{}, true, args, "plan", "-out="+tfPlanName); err != nil {
 		return nil, err
 	}
 
