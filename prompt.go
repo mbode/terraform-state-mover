@@ -2,7 +2,9 @@ package main
 
 import (
 	"fmt"
+	"github.com/agnivade/levenshtein"
 	"github.com/manifoldco/promptui"
+	"sort"
 	"strings"
 )
 
@@ -32,6 +34,7 @@ func prompt(sources map[Resource]bool, destinations map[Resource]bool) (Resource
 			compatDests = append(compatDests, r)
 		}
 	}
+	sortByLevenshteinDistance(compatDests, src)
 
 	fmt.Println(strings.Repeat(" ", len(src.Address)), "↘")
 
@@ -48,6 +51,17 @@ func prompt(sources map[Resource]bool, destinations map[Resource]bool) (Resource
 		return Resource{}, Resource{}, err
 	}
 	return src, compatDests[j], nil
+}
+
+func sortByLevenshteinDistance(dests []Resource, src Resource) {
+	sort.Slice(dests, func(i, j int) bool {
+		distanceToItemI := levenshtein.ComputeDistance(src.Address, dests[i].Address)
+		distanceToItemJ := levenshtein.ComputeDistance(src.Address, dests[j].Address)
+		if distanceToItemI != distanceToItemJ {
+			return distanceToItemI < distanceToItemJ
+		}
+		return dests[i].Address < dests[j].Address
+	})
 }
 
 func toSlice(set map[Resource]bool) []Resource {
