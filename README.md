@@ -30,9 +30,9 @@ terraform-state-mover -- -var-file=variables.tfvars  # using variable files
 
 ## Terraform version compatibility
 
-| < 0.10.1 | 0.10.1…8 | 0.11.0…14 | 0.12.0…26 | 
-|:--------:|:--------:|:---------:|:--------:|
-| ✗        | ✓        | ✓         | ✓        |
+| < 0.10.1 | 0.10.1…8 | 0.11.0…14 | 0.12.0…29 | 0.13.0…2 |
+|:--------:|:--------:|:---------:|:--------:|:--------:|
+| ✗        | ✓        | ✓         | ✓        | ✓        |
 
 ## Contributing
 Pull requests are welcome. Please make sure to update tests as appropriate.
