@@ -1,12 +1,15 @@
 [![Go Report Card](https://goreportcard.com/badge/github.com/mbode/terraform-state-mover)](https://goreportcard.com/report/github.com/mbode/terraform-state-mover)
 [![Actions Status](https://github.com/mbode/terraform-state-mover/workflows/Go/badge.svg)](https://github.com/mbode/terraform-state-mover/actions)
 [![License](https://img.shields.io/github/license/mbode/terraform-state-mover)](https://github.com/mbode/terraform-state-mover/blob/master/LICENSE)
+[![Release](https://img.shields.io/github/v/release/mbode/terraform-state-mover)](https://github.com/mbode/terraform-state-mover/releases/latest)
 
 # Terraform State Mover
 
 Helps refactoring terraform code by offering an interactive prompt for the [`terraform state mv`](https://www.terraform.io/docs/commands/state/mv.html) command.
 
 ## Installation
+
+Either get a pre-built binary from the [latest release](https://github.com/mbode/terraform-state-mover/releases/latest) or build it yourself using
 
 ```bash
 go get github.com/mbode/terraform-state-mover
