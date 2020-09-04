@@ -1,6 +1,6 @@
 module github.com/mbode/terraform-state-mover
 
-go 1.12
+go 1.15
 
 require (
 	github.com/alecthomas/units v0.0.0-20190717042225-c3de453c63f4 // indirect
