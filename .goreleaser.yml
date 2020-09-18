@@ -21,3 +21,12 @@ snapshot:
   name_template: "{{ .Tag }}-next"
 changelog:
   sort: asc
+brews:
+  - tap:
+      owner: mbode
+      name: homebrew-tap
+    homepage: "https://github.com/mbode/terraform-state-mover"
+    description: "Refactoring Terraform code has never been easier"
+    folder: Formula
+    test: |
+      system "#{bin}/terraform-state-mover --version"
