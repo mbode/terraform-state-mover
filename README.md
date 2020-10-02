@@ -1,5 +1,6 @@
 [![Go Report Card](https://goreportcard.com/badge/github.com/mbode/terraform-state-mover)](https://goreportcard.com/report/github.com/mbode/terraform-state-mover)
 [![Actions Status](https://github.com/mbode/terraform-state-mover/workflows/Go/badge.svg)](https://github.com/mbode/terraform-state-mover/actions)
+[![codecov](https://codecov.io/gh/mbode/terraform-state-mover/branch/master/graph/badge.svg)](https://codecov.io/gh/mbode/terraform-state-mover)
 [![Dependabot Status](https://api.dependabot.com/badges/status?host=github&repo=mbode/terraform-state-mover)](https://dependabot.com)
 [![License](https://img.shields.io/github/license/mbode/terraform-state-mover)](https://github.com/mbode/terraform-state-mover/blob/master/LICENSE)
 [![Release](https://img.shields.io/github/v/release/mbode/terraform-state-mover)](https://github.com/mbode/terraform-state-mover/releases/latest)
