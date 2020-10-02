@@ -25,7 +25,7 @@ resource "null_resource" "second" {}`
 		{"null_resource.first", "null_resource", Change{[]changeAction{create}}},
 		{"null_resource.second", "null_resource", Change{[]changeAction{create}}},
 	}
-	got, err := changes([]string{})
+	got, err := changes(config{}, []string{})
 	if err != nil {
 		t.Fatalf("failed computing changes")
 	}
@@ -50,7 +50,7 @@ resource "null_resource" "second" {}`
 		{"null_resource.first", "null_resource", Change{[]changeAction{del}}},
 		{"null_resource.second", "null_resource", Change{[]changeAction{del}}},
 	}
-	got, err := changes([]string{})
+	got, err := changes(config{}, []string{})
 	if err != nil {
 		t.Fatalf("failed computing changes")
 	}
@@ -83,7 +83,7 @@ resource "null_resource" "second" {}`
 		}
 	}
 
-	got, err := changes([]string{})
+	got, err := changes(config{}, []string{})
 	if err != nil {
 		t.Fatalf("failed computing changes")
 	}

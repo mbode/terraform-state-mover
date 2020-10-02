@@ -37,7 +37,7 @@ resource "null_resource" "second" {}`
 		}
 	}
 
-	if got, err := changes([]string{}); err != nil && !reflect.DeepEqual(got, want) {
+	if got, err := changes(config{}, []string{}); err != nil && !reflect.DeepEqual(got, want) {
 		t.Errorf("changes() = %q, want %q", got, want)
 	}
 }

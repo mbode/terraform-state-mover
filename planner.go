@@ -11,7 +11,7 @@ import (
 	"strings"
 )
 
-func changes(args []string) ([]ResChange, error) {
+func changes(cfg config, args []string) ([]ResChange, error) {
 	tfPlan, err := ioutil.TempFile("", "tfplan")
 	if err != nil {
 		return nil, err
@@ -19,7 +19,7 @@ func changes(args []string) ([]ResChange, error) {
 	tfPlanName := tfPlan.Name()
 	defer os.Remove(tfPlanName)
 
-	if err := terraformExec(config{}, true, args, "plan", "-out="+tfPlanName); err != nil {
+	if err := terraformExec(cfg, true, args, "plan", "-out="+tfPlanName); err != nil {
 		return nil, err
 	}
 
