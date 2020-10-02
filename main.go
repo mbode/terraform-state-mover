@@ -37,7 +37,7 @@ func main() {
 			&cli.DurationFlag{
 				Name: "delay", Aliases: []string{"d"},
 				Usage: "Delay between terraform state mv calls. Helps to avoid rate-limits.",
-				Value: time.Second * 2,
+				Value: time.Second * 0,
 			},
 			&cli.BoolFlag{
 				Name: "verbose", Aliases: []string{"v"},
@@ -65,7 +65,7 @@ func action(ctx *cli.Context) error {
 	}
 	cfg := readConfig(ctx)
 
-	changes, err := changes(args)
+	changes, err := changes(cfg, args)
 	if err != nil {
 		return err
 	}
