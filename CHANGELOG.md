@@ -16,7 +16,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [0.3.0] - 2020-10-04
 ### Added
 - Delay flag to prevent hitting rate limits with remote state (contributed by [@xanonid](https://github.com/xanonid))
-- Flags for verbose output and dry-run mode (contributed by [@xanonid](https://github.com/xanonid)
+- Flags for verbose output and dry-run mode (contributed by [@xanonid](https://github.com/xanonid))
 
 ## [0.2.0] - 2020-09-30
 ### Added
