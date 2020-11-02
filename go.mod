@@ -9,6 +9,6 @@ require (
 	github.com/lunixbochs/vtclean v1.0.0 // indirect
 	github.com/manifoldco/promptui v0.8.0
 	github.com/mattn/go-colorable v0.1.7 // indirect
-	github.com/urfave/cli/v2 v2.2.0
+	github.com/urfave/cli/v2 v2.3.0
 	golang.org/x/sys v0.0.0-20200929083018-4d22bbb62b3c // indirect
 )
