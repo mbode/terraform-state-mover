@@ -37,12 +37,12 @@ func changes(cfg config, args []string) ([]ResChange, error) {
 		}
 		stdoutBytes := stdout.Bytes()
 		var changes []ResChange
-		for _, res := range regexp.MustCompile("(?m)\\+ (.*)$").FindAllSubmatch(stdoutBytes, -1) {
+		for _, res := range regexp.MustCompile(`(?m)\+ (.*)$`).FindAllSubmatch(stdoutBytes, -1) {
 			address := string(res[1])
 			parts := strings.Split(address, ".")
 			changes = append(changes, ResChange{address, parts[len(parts)-2], Change{[]changeAction{create}}})
 		}
-		for _, res := range regexp.MustCompile("(?m)- (.*)$").FindAllSubmatch(stdoutBytes, -1) {
+		for _, res := range regexp.MustCompile(`(?m)- (.*)$`).FindAllSubmatch(stdoutBytes, -1) {
 			address := string(res[1])
 			parts := strings.Split(address, ".")
 			changes = append(changes, ResChange{address, parts[len(parts)-2], Change{[]changeAction{del}}})

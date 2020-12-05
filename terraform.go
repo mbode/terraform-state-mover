@@ -3,11 +3,12 @@ package main
 import (
 	"bytes"
 	"fmt"
-	go_version "github.com/hashicorp/go-version"
 	"os"
 	"os/exec"
 	"regexp"
 	"strings"
+
+	go_version "github.com/hashicorp/go-version"
 )
 
 type resChanges struct {
@@ -31,7 +32,6 @@ type changeAction string
 const (
 	noOp   changeAction = "no-op"
 	create changeAction = "create"
-	read   changeAction = "read"
 	update changeAction = "update"
 	del    changeAction = "delete"
 )
