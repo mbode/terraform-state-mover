@@ -37,6 +37,35 @@ jobs:
         with:
           file: ./coverage.txt
 
+  pre012:
+    name: pre012
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: Set up Go
+        uses: actions/setup-go@v2
+        with:
+          go-version: 1.15
+        id: go
+
+      - name: Install terraform
+        run: wget https://releases.hashicorp.com/terraform/0.11.14/terraform_0.11.14_linux_amd64.zip -O /tmp/terraform.zip && sudo unzip -o -d /usr/local/bin/ /tmp/terraform.zip
+
+      - name: Check out code into the Go module directory
+        uses: actions/checkout@v1
+
+      - name: Get dependencies
+        run: go get -v -t -d ./...
+
+      - name: Test
+        run: go test -v -cover -coverprofile=coverage.txt ./...
+
+      - name: Coverage
+        uses: codecov/codecov-action@v1
+        with:
+          file: ./coverage.txt
+
   terraform_version_compatibility:
     name: Terraform compatibility
     runs-on: ubuntu-latest
