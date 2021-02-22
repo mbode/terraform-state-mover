@@ -43,7 +43,7 @@ If terraform-state-mover is used with the [Google Cloud Platform provider](https
 
 ## Terraform version compatibility
 
-| < 0.10.1 | 0.10.1…8 | 0.11.0…14 | 0.12.0…29 | 0.13.0…5 | 0.14.0…3 |
+| < 0.10.1 | 0.10.1…8 | 0.11.0…14 | 0.12.0…30 | 0.13.0…6 | 0.14.0…7 |
 |:--------:|:--------:|:---------:|:---------:|:--------:|:--------:|
 | ✗        | ✓        | ✓         | ✓         | ✓        | ✓        |
 
