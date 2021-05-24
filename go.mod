@@ -3,7 +3,7 @@ module github.com/mbode/terraform-state-mover
 go 1.15
 
 require (
-	github.com/agnivade/levenshtein v1.1.0
+	github.com/agnivade/levenshtein v1.1.1
 	github.com/cpuguy83/go-md2man/v2 v2.0.0 // indirect
 	github.com/hashicorp/go-version v1.2.1
 	github.com/lunixbochs/vtclean v1.0.0 // indirect
