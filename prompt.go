@@ -16,7 +16,16 @@ func prompt(sources map[Resource]bool, destinations map[Resource]bool) (Resource
 		Selected: "{{ .Address }}",
 	}
 	srcs := toSlice(sources)
-	prompt := promptui.Select{Label: "Select Source", Items: append(srcs, Resource{"Finished", "no more resources to move"}), Templates: srcTempl}
+	srcSearcher := func(input string, index int) bool {
+		if index >= len(srcs) {
+			return false
+		}
+
+		resource := srcs[index]
+		return strings.Contains(resource.Address, input)
+	}
+
+	prompt := promptui.Select{Label: "Select Source", Items: append(srcs, Resource{"Finished", "no more resources to move"}), Templates: srcTempl, Searcher: srcSearcher, StartInSearchMode: true}
 	i, _, err := prompt.Run()
 	var empty Resource
 	if err != nil {
@@ -34,6 +43,10 @@ func prompt(sources map[Resource]bool, destinations map[Resource]bool) (Resource
 			compatDests = append(compatDests, r)
 		}
 	}
+	destSearcher := func(input string, index int) bool {
+		resource := compatDests[index]
+		return strings.Contains(resource.Address, input)
+	}
 	sortByLevenshteinDistance(compatDests, src)
 
 	fmt.Println(strings.Repeat(" ", len(src.Address)), "↘")
@@ -45,7 +58,7 @@ func prompt(sources map[Resource]bool, destinations map[Resource]bool) (Resource
 		Inactive: spaces + "  {{ .Address | cyan }} ({{ .Type | red }})",
 		Selected: spaces + "{{ .Address }}",
 	}
-	prompt = promptui.Select{Label: "Select Destination", Items: compatDests, Templates: destTempl}
+	prompt = promptui.Select{Label: "Select Destination", Items: compatDests, Templates: destTempl, Searcher: destSearcher, StartInSearchMode: true}
 	j, _, err := prompt.Run()
 	if err != nil {
 		return Resource{}, Resource{}, err
