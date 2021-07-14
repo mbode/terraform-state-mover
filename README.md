@@ -37,6 +37,15 @@ terraform-state-mover -- -var-file=variables.tfvars  # using variable files
 *Hint:*
 If terraform-state-mover is used with the [Google Cloud Platform provider](https://www.terraform.io/docs/providers/google/index.html) and remote state, it is recommended to use `--delay=2s`, otherwise API rate limits error might occur.
 
+## Key mapping
+| Key | Action    |
+|-----|-----------|
+| ⏎   | Select    |
+| ↓   | Next      |
+| ↑   | Previous  |
+| →   | Page Down |
+| ←   | Page Up   |
+
 ## Demo
 
 ![](demo.gif)
