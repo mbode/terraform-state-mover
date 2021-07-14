@@ -32,6 +32,7 @@ Extra arguments after a `--` are passed to the `terraform plan` call. This makes
 ```bash
 terraform-state-mover -- -var key=value  # setting variables
 terraform-state-mover -- -var-file=variables.tfvars  # using variable files
+terraform-state-mover -- -refresh=false  # skip state refresh
 ```
 
 *Hint:*
