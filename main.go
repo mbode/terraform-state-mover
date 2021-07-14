@@ -3,6 +3,7 @@ package main
 
 import (
 	"fmt"
+	"github.com/manifoldco/promptui"
 	"github.com/urfave/cli/v2"
 	"log"
 	"os"
@@ -76,6 +77,12 @@ func action(ctx *cli.Context) error {
 	for len(srcs) > 0 && len(dests) > 0 {
 		src, dest, err := prompt(srcs, dests)
 		if err != nil {
+			if err == promptui.ErrInterrupt && len(moves) > 0 {
+				fmt.Println("Interrupted. These moves would have been executed based on your selections:")
+				for src, dest := range moves {
+					fmt.Printf("  terraform state mv '%s' '%s'\n", src.Address, dest.Address)
+				}
+			}
 			return err
 		}
 		if reflect.DeepEqual(src, Resource{}) {
