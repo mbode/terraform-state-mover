@@ -16,7 +16,7 @@ jobs:
         id: go
 
       - name: Install terraform
-        run: wget https://releases.hashicorp.com/terraform/1.0.0/terraform_1.0.0_linux_amd64.zip -O /tmp/terraform.zip && sudo unzip -o -d /usr/local/bin/ /tmp/terraform.zip
+        run: wget https://releases.hashicorp.com/terraform/1.0.2/terraform_1.0.2_linux_amd64.zip -O /tmp/terraform.zip && sudo unzip -o -d /usr/local/bin/ /tmp/terraform.zip
 
       - name: Check out code into the Go module directory
         uses: actions/checkout@v1
@@ -155,6 +155,8 @@ jobs:
           - 0.15.4
           - 0.15.5
           - 1.0.0
+          - 1.0.1
+          - 1.0.2
 
     steps:
 
