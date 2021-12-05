@@ -6,15 +6,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 ### Added
-- Reintroduce possibility of partial moves by selecting _Finished_ as source
-- Add builds for `darwin/arm64` and `windows/arm64` by upgrading Go from 1.15 to 1.17
 ### Changed
 ### Deprecated
 ### Removed
 ### Fixed
-- Fix passing of extra arguments to `terraform plan` call
 ### Security
 
+
+## [0.5.0] - 2021-12-05
+### Added
+- Reintroduce possibility of partial moves by selecting _Finished_ as source
+- Add builds for `darwin/arm64` and `windows/arm64` by upgrading Go from 1.15 to 1.17
+### Fixed
+- Fix passing of extra arguments to `terraform plan` call
 
 ## [0.4.2] - 2021-12-05
 ### Fixed
@@ -42,7 +46,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Initial release
 
-[Unreleased]: https://github.com/mbode/terraform-state-mover/compare/0.4.2...HEAD
+[Unreleased]: https://github.com/mbode/terraform-state-mover/compare/0.5.0...HEAD
+[0.5.0]: https://github.com/mbode/terraform-state-mover/compare/0.4.2...0.5.0
 [0.4.2]: https://github.com/mbode/terraform-state-mover/compare/0.4.1...0.4.2
 [0.4.1]: https://github.com/mbode/terraform-state-mover/compare/0.4.0...0.4.1
 [0.4.0]: https://github.com/mbode/terraform-state-mover/compare/0.3.0...0.4.0
