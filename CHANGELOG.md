@@ -6,6 +6,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 ### Added
+- Reintroduce possibility of partial moves by selecting _Finished_ as source
 ### Changed
 ### Deprecated
 ### Removed

@@ -83,7 +83,7 @@ func filterByDestinationResourceTypes(sourceResources map[Resource]bool, destRes
 	}
 
 	for res := range sourceResources {
-		if types[res.Type] {
+		if types[res.Type] || res.Address == FinishedAddress {
 			set[Resource{res.Address, res.Type}] = true
 		}
 	}

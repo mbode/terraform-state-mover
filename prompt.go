@@ -8,6 +8,8 @@ import (
 	"strings"
 )
 
+const FinishedAddress = "Finished"
+
 func prompt(sources map[Resource]bool, destinations map[Resource]bool) (Resource, Resource, error) {
 	srcTempl := &promptui.SelectTemplates{
 		Label:    "{{ . }}",
@@ -15,7 +17,7 @@ func prompt(sources map[Resource]bool, destinations map[Resource]bool) (Resource
 		Inactive: "  {{ .Address | cyan }} ({{ .Type | red }})",
 		Selected: "{{ .Address }}",
 	}
-	srcs := toSlice(sources)
+	srcs := append(toSlice(sources), Resource{FinishedAddress, "no more resources to move"})
 	srcSearcher := func(input string, index int) bool {
 		if index >= len(srcs) {
 			return false
@@ -25,13 +27,13 @@ func prompt(sources map[Resource]bool, destinations map[Resource]bool) (Resource
 		return strings.Contains(resource.Address, input)
 	}
 
-	prompt := promptui.Select{Label: "Select Source", Items: append(srcs, Resource{"Finished", "no more resources to move"}), Templates: srcTempl, Searcher: srcSearcher, StartInSearchMode: true}
+	prompt := promptui.Select{Label: "Select Source", Items: srcs, Templates: srcTempl, Searcher: srcSearcher, StartInSearchMode: true}
 	i, _, err := prompt.Run()
 	var empty Resource
 	if err != nil {
 		return empty, empty, err
 	}
-	if i == len(srcs) {
+	if i == len(srcs)-1 {
 		return empty, empty, nil
 	}
 	src := srcs[i]
