@@ -45,12 +45,11 @@ type Resource struct {
 func terraformExec(cfg config, executeInDryRun bool, args []string, extraArgs ...string) error {
 	args = append(extraArgs, args...)
 	if cfg.dryrun && !executeInDryRun {
-		fmt.Println("Dry-run - would have called now terraform", strings.Join(args, " "))
+		fmt.Println("Dry-run, would have called: terraform", strings.Join(args, " "))
 		return nil
-	} else {
-		if cfg.verbose {
-			fmt.Println("Calling terraform", strings.Join(args, " "))
-		}
+	}
+	if cfg.verbose {
+		fmt.Println("Calling: terraform", strings.Join(args, " "))
 	}
 	cmd := exec.Command("terraform", args...)
 	cmd.Stderr = os.Stderr

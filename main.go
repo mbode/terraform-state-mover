@@ -122,7 +122,7 @@ func readConfig(ctx *cli.Context) config {
 }
 
 func wait(cfg config) {
-	if cfg.verbose {
+	if cfg.verbose && cfg.delay > 0 {
 		fmt.Println("Waiting", cfg.delay, "...")
 	}
 	time.Sleep(cfg.delay)
