@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 ### Added
 - Reintroduce possibility of partial moves by selecting _Finished_ as source
+- Add builds for `darwin/arm64` and `windows/arm64` by upgrading Go from 1.15 to 1.17
 ### Changed
 ### Deprecated
 ### Removed
