@@ -13,6 +13,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Security
 
 
+## [0.4.2] - 2021-12-05
+### Fixed
+- Fix deprecation warning about `bottle :unneeded` in homebrew tap
+
 ## [0.4.1] - 2021-07-16
 ### Fixed
 - Fix `brew style` issue
@@ -35,7 +39,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Initial release
 
-[Unreleased]: https://github.com/mbode/terraform-state-mover/compare/0.4.1...HEAD
+[Unreleased]: https://github.com/mbode/terraform-state-mover/compare/0.4.2...HEAD
+[0.4.2]: https://github.com/mbode/terraform-state-mover/compare/0.4.1...0.4.2
 [0.4.1]: https://github.com/mbode/terraform-state-mover/compare/0.4.0...0.4.1
 [0.4.0]: https://github.com/mbode/terraform-state-mover/compare/0.3.0...0.4.0
 [0.3.0]: https://github.com/mbode/terraform-state-mover/compare/0.2.0...0.3.0
