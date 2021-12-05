@@ -60,13 +60,15 @@ func main() {
 }
 
 func action(ctx *cli.Context) error {
-	var args []string
-	if len(os.Args) >= 2 && os.Args[1] == "--" {
-		args = os.Args[2:]
+	var planArgs []string
+	for i, elem := range os.Args {
+		if "--" == elem {
+			planArgs = os.Args[i+1:]
+		}
 	}
 	cfg := readConfig(ctx)
 
-	changes, err := changes(cfg, args)
+	changes, err := changes(cfg, planArgs)
 	if err != nil {
 		return err
 	}

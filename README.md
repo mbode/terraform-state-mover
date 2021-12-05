@@ -30,9 +30,10 @@ terraform-state-mover # inside a Terraform root directory
 
 Extra arguments after a `--` are passed to the `terraform plan` call. This makes the following possible:
 ```bash
-terraform-state-mover -- -var key=value  # setting variables
-terraform-state-mover -- -var-file=variables.tfvars  # using variable files
+terraform-state-mover -- -var key=value  # set variables
+terraform-state-mover -- -var-file=variables.tfvars  # use variable files
 terraform-state-mover -- -refresh=false  # skip state refresh
+terraform-state-mover -- -parallelism=50  # speed up plan by using more concurrent operations
 ```
 
 *Hint:*
