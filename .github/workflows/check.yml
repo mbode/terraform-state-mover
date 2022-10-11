@@ -197,8 +197,25 @@ jobs:
       - name: Get dependencies
         run: go get -v -t -d ./...
 
+      # Making a special case for old versions of terraform, to ignore a revoked
+      # GPG key from Hashicorp that is trusted by old versions of terraform.
+      # https://discuss.hashicorp.com/t/terraform-updates-for-hcsec-2021-12/23570
       - name: Test
-        run: go test -v ./...
+        run: |
+          case ${{ matrix.terraform }} in
+            # For the old versions of terraform that are patched, run the tests as normal.
+            0.11.15 | 0.12.31 | 0.13.7 )
+              go test -v ./...
+              ;;
+            # For the old unpatched versions, skip verifying plugins in the init step.
+            0.10.* | 0.11.* | 0.12.* | 0.13.* )
+              TF_CLI_ARGS_init="-verify-plugins=false" go test -v ./...
+              ;;
+            # For all other versions, run the tests as normal.
+            * )
+              go test -v ./...
+              ;;
+          esac
 
       - name: Build
         run: go build -v .
