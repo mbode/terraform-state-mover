@@ -36,6 +36,11 @@ jobs:
         with:
           files: ./coverage.txt
 
+      - name: Build a snapshot with GoReleaser
+        uses: goreleaser/goreleaser-action@v3
+        with:
+          args: build --snapshot
+
   pre012:
     name: pre012
     runs-on: ubuntu-latest
