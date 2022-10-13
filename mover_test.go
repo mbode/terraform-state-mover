@@ -1,7 +1,6 @@
 package main
 
 import (
-	"io/ioutil"
 	"os"
 	"reflect"
 	"testing"
@@ -17,7 +16,7 @@ resource "null_resource" "second" {}`
 
 	newTf := `resource "null_resource" "new" {}
 resource "null_resource" "second" {}`
-	if err := ioutil.WriteFile(dir+"/main.tf", []byte(newTf), 0644); err != nil {
+	if err := os.WriteFile(dir+"/main.tf", []byte(newTf), 0644); err != nil {
 		t.Fatal(err)
 	}
 

@@ -3,7 +3,6 @@ package main
 import (
 	"bytes"
 	"encoding/json"
-	"io/ioutil"
 	"os"
 	"os/exec"
 	"reflect"
@@ -12,7 +11,7 @@ import (
 )
 
 func changes(cfg config, planArgs []string) ([]ResChange, error) {
-	tfPlan, err := ioutil.TempFile("", "tfplan")
+	tfPlan, err := os.CreateTemp("", "tfplan")
 	if err != nil {
 		return nil, err
 	}

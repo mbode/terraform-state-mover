@@ -1,6 +1,6 @@
 module github.com/mbode/terraform-state-mover
 
-go 1.17
+go 1.19
 
 require (
 	github.com/agnivade/levenshtein v1.1.1

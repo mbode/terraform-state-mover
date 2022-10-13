@@ -6,6 +6,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 ### Added
+- Upgrade Go from 1.17 to 1.19
 ### Changed
 ### Deprecated
 ### Removed
